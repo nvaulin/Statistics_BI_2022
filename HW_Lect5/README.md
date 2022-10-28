@@ -22,7 +22,7 @@ To install `DGE_analysis.py` script simply download it.
 For Linux:
 
 ```bash
-wget -c https://raw.githubusercontent.com/nvaulin/Python_BI_2022/HW_4_Numpy/HW_4_Numpy/numpy_challenge.py
+wget -c https://raw.githubusercontent.com/nvaulin/Statistics_BI_2022/HW_L5/HW_Lect5/DGE_analysis.py
 ```
 
 This script has several input arguments:
