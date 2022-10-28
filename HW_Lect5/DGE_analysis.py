@@ -1,8 +1,9 @@
-import argparse
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import argparse
+from os.path import join 
 from statsmodels.stats.weightstats import ztest
 
 
@@ -51,7 +52,8 @@ def hist_plotter(df_plot, gene):
     exp_hist.set_title(f'{gene} expression')
     exp_hist.legend(labels=['Cell_type_1', 'Cell_type_2'])
     exp_hist = exp_hist.get_figure()
-    exp_hist.savefig(f".\Pictures\Expressions_hist_{gene}.png")
+    path = join("Pictures", f"Expressions_hist_{gene}.png")
+    exp_hist.savefig(path)
 
 
 def boxes_plotter(df_plot, gene, sample_size=250, n_samples=1000):
@@ -63,7 +65,8 @@ def boxes_plotter(df_plot, gene, sample_size=250, n_samples=1000):
     meanboxes.set_title(f'Mean {gene} expression')
     meanboxes.set_xticklabels(("Cell_type_1", "Cell_type_2"))
     meanboxes = meanboxes.get_figure()
-    meanboxes.savefig(f".\Pictures\Expressions_boxplots_{gene}.png")
+    path = join("Pictures", f"Expressions_boxplots_{gene}.png")
+    meanboxes.savefig(path)
 
 
 def expressions_mean(expressions, sample_size=250, n_samples=1000):
@@ -148,4 +151,4 @@ if __name__ == '__main__':
     }
 
     results = pd.DataFrame(results)
-    results.to_csv(f".\{output}.csv")
+    results.to_csv(f"{output}.csv")
