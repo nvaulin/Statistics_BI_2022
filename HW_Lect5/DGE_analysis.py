@@ -86,10 +86,10 @@ def calculate_ci(sample, std=None):
     return (left_b, right_b)
 
 
-def check_intervals_intersect(intervals):
+def check_intervals_intersection(intervals):
     first_ci = intervals[0]
     second_ci = intervals[1]
-    return not ((first_ci[1] <= second_ci[0]) or (second_ci[1] <= first_ci[0]))
+    return ((first_ci[1] <= second_ci[0]) or (second_ci[1] <= first_ci[0]))
 
 
 def table_ci_preproc(table, celltype):
