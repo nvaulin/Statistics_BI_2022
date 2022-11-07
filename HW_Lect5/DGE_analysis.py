@@ -9,7 +9,7 @@ from statsmodels.stats.weightstats import ztest
 
 def parsing_args():
     parser = argparse.ArgumentParser(
-        usage='DGE_statistical_analysis.py [path_to_first_input] [path_to_second_input] [output_prefix]"',
+        usage='DGE_statiatical_analisys.py [path_to_first_input] [path_to_second_input] [output_prefix]"',
         description='Specification of the location of input and output files')
 
     parser.add_argument('input_1', type=argparse.FileType('r'),
@@ -94,7 +94,7 @@ def check_intervals_intersect(intervals):
 
 def table_ci_preproc(table, celltype):
     '''
-    Preprocesses data for CI-test (including CI evaluation)
+    Preprocesses data for CI-test (includind CI evaluation)
     :param table:
     :param celltype:
     :return:
