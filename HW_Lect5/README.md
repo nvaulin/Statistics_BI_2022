@@ -22,7 +22,7 @@ To install `DGE_analysis.py` script simply download it.
 For Linux:
 
 ```bash
-wget -c https://raw.githubusercontent.com/nvaulin/Statistics_BI_2022/HW_L5/HW_Lect5/DGE_analysis.py
+wget -c https://github.com/nvaulin/Statistics_BI_2022/blob/HW_L6_MultiCompare/HW_Lect5/DGE_analysis.py
 ```
 
 This script has several input arguments:
