@@ -16,18 +16,9 @@ def parsing_args():
 
     method_help = '''Method of p-values adjustment for multiple testing.
     
-    The method can be None for no correction of one of those available in `statsmodels.stats.multitest.multipletests`
-    
-    - bonferroni or b
-    - sidak or s
-    - holm-sidak or hs
-    - holm or h
-    - simes-hochberg or sh
-    - hommel
-    - fdr_bh
-    - fdr_by
-    - fdr_tsbh
-    - fdr_tsbky
+    The method can be None for no correction of one of those available in `statsmodels.stats.multitest.multipletests`:
+    bonferroni or b, sidak or s, holm-sidak or hs, holm or h,
+    simes-hochberg or sh, hommel, fdr_bh, fdr_by, fdr_tsbh, fdr_tsbky
     '''
 
     parser.add_argument('input_1', type=argparse.FileType('r'),
@@ -35,7 +26,7 @@ def parsing_args():
     parser.add_argument('input_2', type=argparse.FileType('r'),
                         help='Path to the second input file with gene expressions')
     parser.add_argument('output', type=str, help='Output file name prefix')
-    parser.add_argument('method', type=str, help=method_help, default=None)
+    parser.add_argument('-m', type=str, help=method_help, metavar="method", default=None)
     args = parser.parse_args()
 
     output = args.output
