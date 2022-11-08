@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import argparse
-from os.path import join 
+from os.path import join
 from statsmodels.stats.weightstats import ztest
 from statsmodels.stats.multitest import multipletests
 
@@ -15,7 +15,6 @@ def parsing_args():
          in the case of multiple testing''')
 
     method_help = '''Method of p-values adjustment for multiple testing.
-    
     The method can be None for no correction of one of those available in `statsmodels.stats.multitest.multipletests`:
     bonferroni or b, sidak or s, holm-sidak or hs, holm or h,
     simes-hochberg or sh, hommel, fdr_bh, fdr_by, fdr_tsbh, fdr_tsbky
@@ -27,6 +26,7 @@ def parsing_args():
                         help='Path to the second input file with gene expressions')
     parser.add_argument('output', type=str, help='Output file name prefix')
     parser.add_argument('-m', type=str, help=method_help, metavar="method", default=None)
+
     args = parser.parse_args()
 
     output = args.output
@@ -161,13 +161,14 @@ if __name__ == '__main__':
 
     results = {
         "mean_diff": mean_diff,
-        "ci_test_results": ci_test_results,
         "z_test_results": z_test_results,
         "z_test_p_values": z_test_p_values
     }
 
     if method is not None:
         results['z_test_p_values_adj'] = z_test_p_values_adj
+    else:
+        results['ci_test_results'] = ci_test_results
 
     results = pd.DataFrame(results)
     results.to_csv(f"{output}.csv")
