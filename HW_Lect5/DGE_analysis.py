@@ -30,14 +30,17 @@ def parsing_args():
     args = parser.parse_args()
 
     output = args.output
-    method = args.method
+    method = args.m
     expressions_1 = pd.read_csv(args.input_1)
     expressions_2 = pd.read_csv(args.input_2)
+    cell_type_1 = args.input_1.name.split('\\')[-1].split('.')[0]
+    cell_type_2 = args.input_2.name.split('\\')[-1].split('.')[0]
+    cell_types = (cell_type_1, cell_type_2)
 
-    return output, expressions_1, expressions_2, method
+    return output, expressions_1, expressions_2, method, cell_types
 
 
-def plotter(expressions_1, expressions_2):
+def plotter(expressions_1, expressions_2, cell_types):
     """
     Provides plots generation for each gene asked via terminal
     """
@@ -53,28 +56,28 @@ def plotter(expressions_1, expressions_2):
     for gene in genes:
         df_plot = pd.concat([expressions_1[[gene]], expressions_2[[gene]]], axis=1)
         df_plot.columns = ['Cell_type_1', 'Cell_type_2']
-        hist_plotter(df_plot, gene)
-        boxes_plotter(df_plot, gene)
+        hist_plotter(df_plot, gene, cell_types)
+        boxes_plotter(df_plot, gene, cell_types)
 
 
-def hist_plotter(df_plot, gene):
+def hist_plotter(df_plot, gene, cell_types):
     plt.figure()
     exp_hist = sns.histplot(df_plot, stat="density")
     exp_hist.set_title(f'{gene} expression')
-    exp_hist.legend(labels=['Cell_type_1', 'Cell_type_2'])
+    exp_hist.legend(labels=cell_types)
     exp_hist = exp_hist.get_figure()
     path = join("Pictures", f"Expressions_hist_{gene}.png")
     exp_hist.savefig(path)
 
 
-def boxes_plotter(df_plot, gene, sample_size=250, n_samples=1000):
+def boxes_plotter(df_plot, gene, cell_types, sample_size=250, n_samples=1000):
     mean_expr_1 = expressions_mean(df_plot[['Cell_type_1']], sample_size, n_samples)
     mean_expr_2 = expressions_mean(df_plot[['Cell_type_2']], sample_size, n_samples)
     mean_expr = [mean_expr_1, mean_expr_2]
     plt.figure()
     meanboxes = sns.boxplot(data=mean_expr)
     meanboxes.set_title(f'Mean {gene} expression')
-    meanboxes.set_xticklabels(("Cell_type_1", "Cell_type_2"))
+    meanboxes.set_xticklabels(cell_types)
     meanboxes = meanboxes.get_figure()
     path = join("Pictures", f"Expressions_boxplots_{gene}.png")
     meanboxes.savefig(path)
@@ -150,10 +153,10 @@ def check_dge_with_ztest(first_table, second_table, method, celltypes=("Cell_typ
 
 
 if __name__ == '__main__':
-    output, expressions_1, expressions_2, method = parsing_args()
+    output, expressions_1, expressions_2, method, cell_types = parsing_args()
     to_plot = input("Do you want to get some expression plots for any gene? [y/n]: ")
     if to_plot == 'y':
-        plotter(expressions_1, expressions_2)
+        plotter(expressions_1, expressions_2, cell_types)
 
     ci_test_results = check_dge_with_ci(expressions_1, expressions_2)
     z_test_p_values, z_test_p_values_adj, z_test_results = check_dge_with_ztest(expressions_1, expressions_2, method)
