@@ -149,14 +149,13 @@ def check_dge_with_ztest(first_table, second_table, method, celltypes=("Cell_typ
     dge_ztest = pd.concat([first_table, second_table], axis=1)
     z_test_results = dge_ztest.apply(lambda row: ztest(row.Cell_type_1, row.Cell_type_2), axis=1)
     dge_ztest[['z_score', 'p_value']] = pd.DataFrame(z_test_results.tolist(), index=z_test_results.index)
-    if method == None:
+    if method is None:
         dge_ztest['Significant_differences'] = dge_ztest['p_value'] < 0.05
+        return dge_ztest['p_value'], None, dge_ztest['Significant_differences']
     else:
         dge_ztest['p_value_adj'] = list(multipletests(dge_ztest['p_value'], method=method)[1])
         dge_ztest['Significant_differences'] = dge_ztest['p_value_adj'] < 0.05
-
-
-    return dge_ztest['p_value'], dge_ztest['Significant_differences']
+        return dge_ztest['p_value'], dge_ztest['p_value_adj'], dge_ztest['Significant_differences']
 
 
 if __name__ == '__main__':
@@ -166,15 +165,18 @@ if __name__ == '__main__':
         plotter(expressions_1, expressions_2)
 
     ci_test_results = check_dge_with_ci(expressions_1, expressions_2)
-    z_test_p_values, z_test_results = check_dge_with_ztest(expressions_1, expressions_2, method)
+    z_test_p_values, z_test_p_values_adj, z_test_results = check_dge_with_ztest(expressions_1, expressions_2, method)
     mean_diff = expressions_1.mean(axis=0) - expressions_2.mean(axis=0)
 
     results = {
+        "mean_diff": mean_diff,
         "ci_test_results": ci_test_results,
         "z_test_results": z_test_results,
-        "z_test_p_values": z_test_p_values,
-        "mean_diff": mean_diff
+        "z_test_p_values": z_test_p_values
     }
+
+    if method is not None:
+        results['z_test_p_values_adj'] = z_test_p_values_adj
 
     results = pd.DataFrame(results)
     results.to_csv(f"{output}.csv")
