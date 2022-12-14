@@ -13,6 +13,6 @@ The dataset is taken from [GitHub](https://raw.githubusercontent.com/selva86/dat
 This project is the first project in the course on statistics at the Bioinformatics Institute. 
 In this project, you can see the standard techniques for the linear regression.
 
- **IMPORTANT** - the project was completed with `python 3.9.10`. 
+The project was completed with `python 3.9.10`. 
 
 
