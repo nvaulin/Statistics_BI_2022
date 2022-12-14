@@ -1,6 +1,9 @@
 # Boston Houses
 
-<a href='pictures/houese.jpg" align="right" width="500" ></a>
+
+<a href='https://raw.githubusercontent.com/selva86/datasets/master/BostonHousing.csv'><img src="./pictures/houses.jpg" align="right" width="400" ></a>
+
+
 ### [BI](https://bioinf.me/) statisctics course Project 2
 > *by* Nikita Vaulin, Skoltech <br />
 > Nikita.Vaulin@skoltech.ru
